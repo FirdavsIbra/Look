@@ -6,7 +6,7 @@ namespace Look.Domain.Entities.Orders
     public class Order : Auditable
     {
         public decimal TotalPrice { get; set; }
-        public bool IsPaid { get; set; }
+        public bool IsPaid { get; set; } = false;
 
         public long CustomerId { get; set; }
         public Customer Customer { get; set; }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Look.Data.IRepositories;
+using Look.Data.Repositories;
 using Look.Domain.Entities.Configurations;
 using Look.Domain.Entities.Orders;
 using Look.Domain.Entities.Products;
@@ -30,6 +31,13 @@ namespace Look.Service.Services
 
         public async Task<Order> AddAsync(OrderForCreation dto)
         {
+            var customer = await _unitOfWork.Customers.GetAsync(c => c.Id == dto.CustomerId);
+
+            if (customer is null)
+            {
+                throw new LookException(404, "User not found");
+            }
+
             var mappedOrder = _mapper.Map<Order>(dto);
 
             var result = await _unitOfWork.Orders.AddAsync(mappedOrder);

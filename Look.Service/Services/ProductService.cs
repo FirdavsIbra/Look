@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Look.Data.IRepositories;
+using Look.Data.Repositories;
 using Look.Domain.Entities.Configurations;
 using Look.Domain.Entities.Products;
 using Look.Service.DTOs.ProductForCreationDto;
@@ -28,6 +29,14 @@ namespace Look.Service.Services
 
             if (exist is not null)
                 throw new LookException(404, "Product already exist");
+
+
+            var category = await _unitOfWork.Categories.GetAsync(p => p.Id == dto.CategoryId);
+
+            if (category is null)
+            {
+                throw new LookException(404, "Category not found!");
+            }
 
             var mappedProduct = _mapper.Map<Product>(dto);
 

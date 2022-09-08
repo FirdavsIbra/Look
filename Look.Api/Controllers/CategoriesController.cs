@@ -7,10 +7,10 @@ namespace Look.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CategoriesContoller : Controller
+    public class CategoriesController : Controller
     {
         private readonly ICategoryService _categoryService;
-        public CategoriesContoller(ICategoryService categoryService)
+        public CategoriesController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
         }

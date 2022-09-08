@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Look.Data.IRepositories;
+using Look.Data.Repositories;
 using Look.Domain.Entities.Categories;
 using Look.Domain.Entities.Configurations;
 using Look.Service.DTOs.CategoryForCreationDto;
@@ -40,9 +41,9 @@ namespace Look.Service.Services
 
         public async Task<bool> DeleteAsync(Expression<Func<Category, bool>> expression)
         {
-            var product = await _unitOfWork.Categories.GetAsync(expression);
+            var category = await _unitOfWork.Categories.GetAsync(expression);
 
-            if (product is null)
+            if (category is null)
                 throw new LookException(404, "This kind of category not found");
 
 

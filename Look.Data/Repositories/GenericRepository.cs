@@ -22,8 +22,6 @@ namespace Look.Data.Repositories
         {
             var entry = await _dbSet.AddAsync(entity);
 
-            await _dbContext.SaveChangesAsync();
-
             return entry.Entity;
         }
 
@@ -35,8 +33,6 @@ namespace Look.Data.Repositories
                 return false;
 
             _dbSet.Remove(entity);
-
-            await _dbContext.SaveChangesAsync();
 
             return true;
         }

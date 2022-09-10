@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 namespace Look.Data.Repositories
 {
 #pragma warning disable
-    public abstract class GenericRepository<T> : IGenericRepository<T> where T : Auditable
+    public class GenericRepository<T> : IGenericRepository<T> where T : Auditable
     {
         protected readonly LookDbContext _dbContext;
         protected DbSet<T> _dbSet;

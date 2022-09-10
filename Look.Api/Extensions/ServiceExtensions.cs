@@ -13,6 +13,7 @@ namespace Look.Api.Extensions
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IPaymentService, PaymentService>();
         }
     }
 }

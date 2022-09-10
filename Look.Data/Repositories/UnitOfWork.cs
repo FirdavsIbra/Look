@@ -1,5 +1,10 @@
 ﻿using Look.Data.DbContexts;
 using Look.Data.IRepositories;
+using Look.Domain.Entities.Categories;
+using Look.Domain.Entities.Customers;
+using Look.Domain.Entities.Orders;
+using Look.Domain.Entities.Payments;
+using Look.Domain.Entities.Products;
 
 namespace Look.Data.Repositories
 {
@@ -11,17 +16,19 @@ namespace Look.Data.Repositories
         {
             _dbContext = dbContext;
 
-            Customers = new CustomerRepository(dbContext);
-            Products = new ProductRepository(dbContext);
-            Categories = new CategoryRepository(dbContext);
-            Payments = new PaymentRepository(dbContext);
-            Orders = new OrderRepository(dbContext);
+            Customers = new GenericRepository<Customer>(_dbContext);
+            Products = new GenericRepository<Product>(_dbContext);
+            Categories = new GenericRepository<Category>(_dbContext);
+            Payments = new GenericRepository<Payment>(_dbContext);
+            Orders = new GenericRepository<Order>(_dbContext);
+
         }
-        public ICustomerRepository Customers { get; }
-        public IProductRepository Products { get; }
-        public ICategoryRepository Categories { get; }
-        public IPaymentRepository Payments { get; }
-        public IOrderRepository Orders { get; }
+        public IGenericRepository<Customer> Customers { get; }
+        public IGenericRepository<Product> Products { get; }
+        public IGenericRepository<Category> Categories { get; }
+        public IGenericRepository<Payment> Payments { get; }
+        public IGenericRepository<Order> Orders { get; }
+
 
         public void Dispose()
         {

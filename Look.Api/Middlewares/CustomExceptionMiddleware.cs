@@ -39,8 +39,6 @@ namespace Look.Api.Middlewares
                 Code = code,
                 Message = message,
             });
-
         }
     }
-
 }

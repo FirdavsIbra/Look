@@ -3,6 +3,7 @@ using Look.Api.Middlewares;
 using Look.Data.DbContexts;
 using Look.Service.Mappers;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,13 @@ builder.Services.AddDbContext<LookDbContext>(options =>
 
 builder.Services.AddCustomServices();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+var logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(builder.Configuration)
+        .Enrich.FromLogContext()
+        .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
 
 var app = builder.Build();

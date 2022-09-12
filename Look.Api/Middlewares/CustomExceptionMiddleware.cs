@@ -5,9 +5,11 @@ namespace Look.Api.Middlewares
     public class CustomExceptionMiddleware
     {
         private readonly RequestDelegate next;
-        public CustomExceptionMiddleware(RequestDelegate next)
+        private readonly ILogger<CustomExceptionMiddleware> logger;
+        public CustomExceptionMiddleware(RequestDelegate next, ILogger<CustomExceptionMiddleware> logger)
         {
             this.next = next;
+            this.logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -18,10 +20,12 @@ namespace Look.Api.Middlewares
             }
             catch (LookException ex)
             {
+                logger.LogError(ex.ToString());
                 await HandlerExceptionAsync(context, ex.Code, ex.Message);
             }
             catch (Exception ex)
             {
+                logger.LogError(ex.ToString());
                 await HandlerExceptionAsync(context, 500, ex.Message);
             }
         }

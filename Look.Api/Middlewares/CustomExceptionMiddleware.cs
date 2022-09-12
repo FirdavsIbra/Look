@@ -1,15 +1,16 @@
-﻿using Look.Service.Exceptions;
+﻿using log4net;
+using log4net.Repository.Hierarchy;
+using Look.Service.Exceptions;
 
 namespace Look.Api.Middlewares
 {
     public class CustomExceptionMiddleware
     {
         private readonly RequestDelegate next;
-        private readonly ILogger<CustomExceptionMiddleware> logger;
-        public CustomExceptionMiddleware(RequestDelegate next, ILogger<CustomExceptionMiddleware> logger)
+        private readonly ILog log = LogManager.GetLogger(typeof(CustomExceptionMiddleware));
+        public CustomExceptionMiddleware(RequestDelegate next)
         {
             this.next = next;
-            this.logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -20,12 +21,11 @@ namespace Look.Api.Middlewares
             }
             catch (LookException ex)
             {
-                logger.LogError(ex.ToString());
                 await HandlerExceptionAsync(context, ex.Code, ex.Message);
             }
             catch (Exception ex)
             {
-                logger.LogError(ex.ToString());
+                log.Error(ex.ToString());
                 await HandlerExceptionAsync(context, 500, ex.Message);
             }
         }

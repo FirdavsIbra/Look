@@ -21,13 +21,8 @@ builder.Services.AddDbContext<LookDbContext>(options =>
 builder.Services.AddCustomServices();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-var logger = new LoggerConfiguration()
-        .ReadFrom.Configuration(builder.Configuration)
-        .Enrich.FromLogContext()
-        .CreateLogger();
-builder.Logging.ClearProviders();
-builder.Logging.AddSerilog(logger);
-
+builder.Logging.AddLog4Net("log4net.config");
+builder.Logging.SetMinimumLevel(LogLevel.Error);
 
 var app = builder.Build();
 

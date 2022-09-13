@@ -8,6 +8,7 @@ namespace Look.Api.Middlewares
     {
         private readonly RequestDelegate next;
         private readonly ILog log = LogManager.GetLogger(typeof(CustomExceptionMiddleware));
+
         public CustomExceptionMiddleware(RequestDelegate next)
         {
             this.next = next;
